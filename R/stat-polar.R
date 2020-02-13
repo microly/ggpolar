@@ -1,4 +1,4 @@
-#' StatPole
+#' StatPolar
 #'
 #' @inheritParams ggplot2::stat_identity
 #'
@@ -6,10 +6,10 @@
 #' new aes: radius, theta, x0, y0
 #'
 #' @export
-StatPole <- ggplot2::ggproto("StatPole", Stat,
+StatPolar <- ggplot2::ggproto("StatPolar", ggplot2::Stat,
     required_aes = c("p_radius", "p_theta"),
     default_aes = ggplot2::aes(x = ggplot2::stat(x), y = ggplot2::stat(y),
-                               pole_x = 0, pole_y = 0),
+                               polar_x = 0, polar_y = 0),
 
     compute_group = function(data, scales) {
 
@@ -18,11 +18,11 @@ StatPole <- ggplot2::ggproto("StatPole", Stat,
         if (!is.null(data$x)) warning("ignore aes x!")
         if (!is.null(data$y)) warning("ignore aes y!")
 
-        if (is.null(data$pole_x)) data$pole_x <- 0
-        if (is.null(data$pole_y)) data$pole_y <- 0
+        if (is.null(data$polar_x)) data$polar_x <- 0
+        if (is.null(data$polar_y)) data$polar_y <- 0
 
-        x = pole_x(data$p_radius, data$p_theta) + data$pole_x
-        y = pole_y(data$p_radius, data$p_theta) + data$pole_y
+        x = polar_x(data$p_radius, data$p_theta) + data$polar_x
+        y = polar_y(data$p_radius, data$p_theta) + data$polar_y
 
         data$x <- x
         data$y <- y
@@ -38,9 +38,9 @@ StatPole <- ggplot2::ggproto("StatPole", Stat,
 #        g = rep(c(1,2,3), each = 2),
 #        x = 1,
 #        y = 0) %>%
-#     ggplot() + geom_line(aes(p_radius = m, p_theta = a, pole_x = x, pole_y = y,
+#     ggplot() + geom_line(aes(p_radius = m, p_theta = a, polar_x = x, polar_y = y,
 #                              group = g),
-#                          stat = "pole") +
+#                          stat = "polar") +
 #     geom_point(aes(x = 0, y = 0), data = NULL) +
 #     coord_equal()
 #
@@ -49,7 +49,7 @@ StatPole <- ggplot2::ggproto("StatPole", Stat,
 #        a = c(0, 90, 180, 270, 45, 135, 225, 315),
 #        g = factor(c(1, 1, 1, 1, 2, 2, 2, 2))) %>%
 #     ggplot() + geom_polygon(aes(p_radius = m, p_theta = a, group = g, fill = g),
-#                             stat = "pole") +
+#                             stat = "polar") +
 #         coord_equal()
 
 

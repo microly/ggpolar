@@ -1,4 +1,4 @@
-# geom_pole_axis
+# geom_polar_axis
 
 
 # tibble(m = rep(c(1,3), 3),
@@ -10,18 +10,20 @@
 #         geom_point(aes(x = 0, y = 0), data = NULL)
 
 
+# geom_polar_ring
 
 
 
-
-# geom_pole_ring
-
+# geom_polar_arc
 
 
-# geom_pole_arc
+# geom_polar_shan_xing
 
 
 
-# geom_pole_shan_xing
+# geom_polar_huan
+
+
+# geom_polar_bufen_huan
 
 
