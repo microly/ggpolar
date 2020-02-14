@@ -1,4 +1,4 @@
-#' pole_x
+#' polar_x
 #'
 #' @param radius a numeric
 #' @param theta a numeric
@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-pole_x <- function(radius, theta) {
+polar_x <- function(radius, theta) {
     radius * cospi(theta/180)
 }
 
@@ -21,7 +21,7 @@ pole_x <- function(radius, theta) {
 #' @export
 #'
 #' @examples
-pole_y <- function(radius, theta) {
+polar_y <- function(radius, theta) {
     radius * sinpi(theta/180)
 }
 

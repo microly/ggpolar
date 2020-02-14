@@ -1,5 +1,5 @@
 geom_radar_axis <- function(radius, theta = 0:7 *45, radius_start = 0,
-                            mapping = NULL, data = NULL, ..., stat = "pole",
+                            mapping = NULL, data = NULL, ..., stat = "polar",
                             inherit.aes = FALSE) {
 
     # handle data
@@ -35,13 +35,13 @@ geom_radar_axis <- function(radius, theta = 0:7 *45, radius_start = 0,
     }
 
     # handle stat
-    if (stat != "pole") warning('other than "pole", ignore param stat!')
+    if (stat != "polar") warning('other than "polar", ignore param stat!')
 
     # geom
     geom_path(
         mapping = mapping_temp,
         data = data_df,
-        stat = "pole",
+        stat = "polar",
         ...,
         inherit.aes = inherit.aes
     )
@@ -52,7 +52,7 @@ geom_radar_axis <- function(radius, theta = 0:7 *45, radius_start = 0,
 #ggplot() + geom_radar_axis(radius = 1)
 
 
-geom_radar_ring <- function(radius, pole_x = 0, pole_y = 0,
+geom_radar_ring <- function(radius, polar_x = 0, polar_y = 0,
                             mapping = aes(), data = NULL,
                             ..., inherit.aes = FALSE) {
 
@@ -82,13 +82,6 @@ buffers <- function(x, dist) {
         dplyr::arrange(desc(dist)) %>%
         dplyr::mutate(ring = factor(1:n()))
 }
-
-
-
-
-
-
-
 
 
 

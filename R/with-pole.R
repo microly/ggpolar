@@ -1,8 +1,6 @@
 # with_pole
-# 1. !! do not handle sf
-# 2. handle that has stat other than identity
-# 3.
-# TODO: x0, y0 can be param
+# 1.
+# TODO: x0, y0 can be param             modify mapping (aes)
 # tibble(m = rep(c(1,3), 3),
 #        a = c(60, 60, 180, 180, 300, 300),
 #        g = rep(c(1,2,3), each = 2),
@@ -18,45 +16,63 @@
 
 
 
+# ggplot(data.frame(x = 1:3, y = 1:3, z = 1)) +
+# with_polar(geom_line(aes(p_radius = x, p_theta = y)))
+
 # ggplot(data.frame(x = 1:20, y = 1:20, z = factor(c(rep("1",10), rep("2",10))))) +
-# with_pole(stat_smooth(aes(p_radius = x, p_theta = y, pole_x = 10, pole_y = 10,
+# with_polar(stat_smooth(aes(p_radius = x, p_theta = y, polar_x = 10, polar_y = 10,
 #            group = z, colour = z)))
 
 # ggplot(data.frame(x = 1:20, y = 1:20, z = factor(c(rep("1",10), rep("2",10)))),
-#        aes(p_radius = x, p_theta = y, pole_x = 10, pole_y = 10,
-#        group = z, colour = z)) + with_pole(stat_smooth())
+#        aes(p_radius = x, p_theta = y, polar_x = 10, polar_y = 10,
+#        group = z, colour = z)) + with_polar(stat_smooth())
 
-# ggplot(data.frame(x = 1:3, y = 1:3, z = 1)) +
-# with_pole(geom_line(aes(p_radius = x, p_theta = y)))
+# ggplot() + with_polar(geom_sf())
+
+# ggplot(tibble(x = 1:100), aes(x)) + with_polar(geom_histogram())
+
+# ggplot(faithful, aes(x = eruptions, y = waiting, p_radius = eruptions, p_theta = waiting)) +
+# with_polar(geom_point(), geom_density_2d())
+# 5: stat_contour(): Zero contours were generated
+# 6: In min(x) : no non-missing arguments to min; returning Inf
+# 7: In max(x) : no non-missing arguments to max; returning -Inf
+
+# ggplot(faithful, aes(p_radius = eruptions, p_theta = waiting)) +
+#    with_polar(geom_point(), geom_density_2d())
+# Computation failed in `poled_stat()`:
+# attempt to apply non-function
+
+### VIP
+# ggplot(faithfuld, aes(p_radius = eruptions, p_theta = waiting)) +
+#    with_polar(stat_contour(aes(z = density)))
+# 1: In isoband_z_matrix(data) : NAs introduced by coercion to integer range
+# 2: Computation failed in `poled_stat()`: invalid 'ncol' value (too large or NA)
 
 
-
-with_pole <- function(...) {
+with_polar <- function(...) {
     x <- list(...)
-    with_pole_impl(x)
+    with_polar_impl(x)
 }
 
 
-with_pole_impl <- function(x) {
-    UseMethod("with_pole_impl")
+with_polar_impl <- function(x) {
+    UseMethod("with_polar_impl")
 }
 
 
-with_pole_impl.default <- function(x) {
-    stop(
-        "with_pole() can't work with object of class `", class(x), ".\n",
-        call. = FALSE
-    )
+with_polar_impl.default <- function(x) {
+    stop("with_polar() can't work with object of class `", class(x), ".\n",
+        call. = FALSE)
 }
 
 
-with_pole_impl.list <- function(x) {
+with_polar_impl.list <- function(x) {
 
     l <- list()
 
     # for some reason lapply() version of this doesn't work
     for (i in seq_along(x)) {
-        l[[i]] <- with_pole_impl(x[[i]])
+        l[[i]] <- with_polar_impl(x[[i]])
     }
 
     if (length(l) == 1) return(l[[1]])
@@ -64,16 +80,20 @@ with_pole_impl.list <- function(x) {
 }
 
 
-with_pole_impl.Layer <- function(x) {
+with_polar_impl.Layer <- function(x) {
 
     parent_stat <- x$stat
 
     if (inherits(parent_stat, "StatPole")) return(x)
 
     if (inherits(parent_stat, "StatIdentity")) {
-        x$stat <- StatPole
+        x$stat <- StatPolar
         return(x)
     }
+
+    if ((!aes_require_y(parent_stat)) || (!aes_require_y(parent_stat)))
+        stop("with_polar() only can work with the layer that has a stat, of which
+        the required_aes should include both of x and y!\n", call. = FALSE)
 
     ggproto(NULL, x, stat = poled_stat(parent_stat))
 }
@@ -89,14 +109,14 @@ poled_stat <- function(parent_stat) {
 
                 print(data)
 
-                if (!is.null(data$x)) warning("ignore aes x!")
-                if (!is.null(data$y)) warning("ignore aes y!")
+                if (!is.null(data$x)) warning("with_polar() ignoring aes x!", call. = FALSE)
+                if (!is.null(data$y)) warning("with_polar() ignoring aes y!", call. = FALSE)
 
-                if (is.null(data$pole_x)) data$pole_x <- 0
-                if (is.null(data$pole_y)) data$pole_y <- 0
+                if (is.null(data$polar_x)) data$polar_x <- 0
+                if (is.null(data$polar_y)) data$polar_y <- 0
 
-                x = pole_x(data$p_radius, data$p_theta) + data$pole_x
-                y = pole_y(data$p_radius, data$p_theta) + data$pole_y
+                x = polar_x(data$p_radius, data$p_theta) + data$polar_x
+                y = polar_y(data$p_radius, data$p_theta) + data$polar_y
 
                 data$x <- x
                 data$y <- y
@@ -112,21 +132,3 @@ poled_stat <- function(parent_stat) {
             })
 }
 
-
-drop_xy <- function(aes) {
-    aes[!(aes %in% c("x", "y"))]
-    #c(aes[!(aes %in% c("x", "y"))], c("p_radius", "p_theta"))
-}
-
-
-# aes_add_pole <- function(aes) {
-#
-#     aes_new <- c(aes,
-#                  ggplot2::aes(x = ggplot2::stat(x),
-#                               y = ggplot2::stat(y),
-#                               pole_x = 0, pole_y = 0))
-#
-#     class(aes_new) <- "uneval"
-#
-#     aes_new
-# }
