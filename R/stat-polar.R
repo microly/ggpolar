@@ -15,8 +15,8 @@ StatPolar <- ggplot2::ggproto("StatPolar", ggplot2::Stat,
 
         # print(data)
 
-        if (!is.null(data$x)) warning("ignore aes x!")
-        if (!is.null(data$y)) warning("ignore aes y!")
+        if (!is.null(data$x)) warning("StatPolar ignoring aes x!", call. = FALSE)
+        if (!is.null(data$y)) warning("StatPolar ignoring aes y!", call. = FALSE)
 
         if (is.null(data$polar_x)) data$polar_x <- 0
         if (is.null(data$polar_y)) data$polar_y <- 0
