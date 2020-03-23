@@ -59,7 +59,7 @@ geom_radar_ring <- function(radius, polar_x = 0, polar_y = 0,
     # handle data
     if (!is.null(data)) warning("ignore param data!")
 
-    data_sf <- st_point(x = c(pole_x, pole_y), dim = "XY") %>%
+    data_sf <- st_point(x = c(polar_x, polar_y), dim = "XY") %>%
         st_sfc() %>% st_sf() %>%
         buffers(radius)
 
