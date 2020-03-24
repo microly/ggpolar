@@ -1,4 +1,4 @@
-Package: ggpole
+Package: ggpolar
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
@@ -9,5 +9,5 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Imports: ggplot2, purrr
+Imports: ggplot2, purrr, tibble, magrittr, tidyr
 RoxygenNote: 7.0.2
