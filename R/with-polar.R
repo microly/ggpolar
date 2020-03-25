@@ -106,8 +106,12 @@ with_polar_impl.Layer <- function(x, interpolate, supplement, add_origin) {
 
 
     if (inherits(parent_stat, "StatPolar")) {
-        # x$stat$compute_group <- compute_group_interpolate(supplement = supplement,
-        #                                                   add_origin = add_origin)
+        if (interpolate) {
+            x$stat <- ggplot2::ggproto("StatPolarInterpolation", StatPolar,
+                                       compute_group = compute_group_interpolate(supplement = supplement,
+                                                                                 add_origin = add_origin)
+                                       )
+        }
         return(x)
     }
 
@@ -116,11 +120,12 @@ with_polar_impl.Layer <- function(x, interpolate, supplement, add_origin) {
         stop("with_polar() only can work with the layer that has a stat, of which
         the required_aes should include both of x and y!\n", call. = FALSE)
 
-    ggproto(NULL, x, stat = polarize_stat(parent_stat))
+    ggproto(NULL, x, stat = polarize_stat(parent_stat, interpolate = interpolate,
+                                          supplement = supplement, add_origin = add_origin))
 }
 
 
-polarize_stat <- function(parent_stat) {
+polarize_stat <- function(parent_stat, interpolate, supplement, add_origin) {
 
     ggproto('StatPolarized', parent_stat,
             required_aes = drop_xy(parent_stat$required_aes),
@@ -130,6 +135,10 @@ polarize_stat <- function(parent_stat) {
 
                 if (is.null(data$p_radius) || is.null(data$p_theta))
                     stop("with_polar() requires the following missing aesthetics: p_radius, p_theta")
+
+                if (interpolate) {
+                    data <- polar_interpolate(data, supplement = supplement, add_origin = add_origin)
+                }
 
                 data <- polar_compute_group(data, "with_polar()")
 
@@ -157,8 +166,8 @@ compute_group_interpolate <- function(supplement, add_origin) {
 
 
 
-
-
+# mainly for geom_path(), geom_polygon()
+# not for point     ! information of last point      ! single point
 
 ggplot(data.frame(x = 2, y = 1:3 * 30), aes(p_radius = x, p_theta = y)) +
     with_polar(geom_polygon(fill = "green"), geom_path(colour = "yellow", size = 3),
@@ -177,7 +186,7 @@ ggplot(data.frame(x = 1, y = 1:4 * 22.5, z = c("a", "a", "b", "b")),
 ggplot(data.frame(x = 1, y = 1:4 * 22.5, z = c("a", "a", "b", "b")),
        aes(p_radius = x, p_theta = y, colour = z)) +
     with_polar(geom_polygon(size = 3), geom_path(size = 6),
-               interpolate = T, supplement = F, add_origin = T) +
+               interpolate = T, supplement = T, add_origin = F) +
     geom_point(stat = "polar", size = 10) +
     coord_equal()
 
@@ -190,3 +199,37 @@ ggplot(data.frame(x = c(1,1,2,2), y = c(1,2,2,1) * 22.5),
     coord_equal()
 
 
+ggplot(data.frame(x = 2, y = 1:3 * 30), aes(p_radius = x, p_theta = y)) +
+    with_polar(geom_point(stat = "polar", size = 1),
+               interpolate = T, supplement = F, add_origin = F) +
+    coord_equal()
+
+
+ggplot(data.frame(x = 2, y = c(1,2,3) * 30), aes(p_radius = x, p_theta = y)) +
+    with_polar(geom_smooth(),
+               geom_point(stat = "polar", size = 2),
+               interpolate = T, supplement = F, add_origin = F) +
+    with_polar(geom_smooth(size = 6)) +
+    geom_point(stat = "polar", size = 6) +
+    coord_equal()
+
+
+
+# work with StatPolar
+
+ggplot(data.frame(x = 1, y = c(0,3) * 30), aes(p_radius = x, p_theta = y)) +
+    with_polar(geom_path(stat = "polar"), interpolate = T)
+
+ggplot(data.frame(x = 1, y = c(0,3) * 30), aes(p_radius = x, p_theta = y)) +
+    with_polar(geom_path(), interpolate = T)
+
+
+# work with Stat other than identity and StatPolar
+# work with attention!
+
+ggplot(data.frame(x = 10, y = c(1,2,3) * 30), aes(p_radius = x, p_theta = y)) +
+    with_polar(geom_smooth(), geom_point(size = 6)) +
+    with_polar(geom_smooth(),
+               interpolate = T, supplement = F, add_origin = F) +
+    with_polar(geom_point(stat = "polar", size = 1, colour = "red"),
+               interpolate = T, supplement = F, add_origin = F)
