@@ -14,10 +14,13 @@
 #    with_polar(stat_contour(aes(z = density)))
 # 1: In isoband_z_matrix(data) : NAs introduced by coercion to integer range
 # 2: Computation failed in `poled_stat()`: invalid 'ncol' value (too large or NA)
-
-
-
-
+#
+# df <- tibble::tibble(x = rep(c(1:3), 3), y = rep(c(1:3), each = 3))
+#
+# ggplot(df, aes(x, y)) + geom_point() + geom_density_2d()
+#
+# ggplot(df, aes(p_radius = xy_radius(x, y), p_theta = xy_theta(x, y))) +
+#     with_polar(geom_point(), stat_contour(aes(z = x)))
 
 
 
@@ -31,26 +34,28 @@
 #' @export
 #'
 #' @examples
+#' library(ggplot2)
+#'
+#' ggplot(data.frame(x = 1, y = 0:3 * 30)) +
+#'   with_polar(geom_point(aes(p_radius = x, p_theta = y, polar_x = 1,
+#'              polar_y = 1, polar_theta0 = 90))) +
+#'   coord_equal()
+#'
+#'
+#' # 'interpolate' mainly for geom_path(), geom_polygon()
+#' # not for point     ! information of last point      ! single point
+#'
 #' ggplot(data.frame(x = 2, y = 1:3 * 30), aes(p_radius = x, p_theta = y)) +
-#'     with_polar(geom_line(), geom_point()) +
-#'     coord_equal() + xlim(c(0, NA)) + ylim(c(0, NA))
+#'   with_polar(geom_polygon(fill = "green"), geom_path(colour = "yellow", size = 3),
+#'              interpolate = T, supplement = F, add_origin = F) +
+#'   geom_point(stat = "polar", colour = "red", size = 10) +
+#'   coord_equal()
 #'
-#' ggplot(data.frame(x = 2, y = 1:3 * 30), aes(p_radius = x, p_theta = y, polar_theta0 = -30)) +
-#'     with_polar(geom_line(), geom_point()) +
-#'     coord_equal() + xlim(c(0, NA)) + ylim(c(0, NA))
 #'
-#' ggplot(data.frame(x = 1:20, y = 1:20, z = factor(c(rep("1",10), rep("2",10))))) +
-#'     with_polar(stat_smooth(aes(p_radius = x, p_theta = y, polar_x = 10, polar_y = 10,
-#'                                group = z, colour = z)))
+#' df <- tibble::tibble(x = c(0,1,1,0), y = c(0,0,1,1))
+#' ggplot(df, aes(p_radius = xy_radius(x, y), p_theta = xy_theta(x, y))) +
+#'   with_polar(geom_point(), ggforce::geom_shape(expand = unit(-0.1, 'npc'), radius = unit(0.1, 'npc')))
 #'
-#' ggplot(data.frame(x = 1:20, y = 1:20, z = factor(c(rep("1",10), rep("2",10))))) +
-#'     with_polar(stat_smooth(aes(p_radius = x, p_theta = y, polar_x = 10, polar_y = 10,
-#'                                polar_theta0 = 60,
-#'                                group = z, colour = z)))
-#'
-#' ggplot(data.frame(x = 1:20, y = 1:20, z = factor(c(rep("1",10), rep("2",10)))),
-#'        aes(p_radius = x, p_theta = y, polar_x = 10, polar_y = 10,
-#'            group = z, colour = z)) + with_polar(stat_smooth())
 #'
 #' # do not work:
 #' # ggplot() + with_polar(geom_sf())
@@ -166,70 +171,70 @@ compute_group_interpolate <- function(supplement, add_origin) {
 
 
 
-# mainly for geom_path(), geom_polygon()
-# not for point     ! information of last point      ! single point
-
-ggplot(data.frame(x = 2, y = 1:3 * 30), aes(p_radius = x, p_theta = y)) +
-    with_polar(geom_polygon(fill = "green"), geom_path(colour = "yellow", size = 3),
-               interpolate = T, supplement = F, add_origin = F) +
-    geom_point(stat = "polar", colour = "red", size = 10) +
-    coord_equal()
 
 
-ggplot(data.frame(x = 1, y = 1:4 * 22.5, z = c("a", "a", "b", "b")),
-       aes(p_radius = x, p_theta = y, colour = z)) +
-    with_polar(geom_polygon(size = 3), geom_path(size = 6),
-               interpolate = T, supplement = F, add_origin = T) +
-    geom_point(stat = "polar", size = 10) +
-    coord_equal()
-
-ggplot(data.frame(x = 1, y = 1:4 * 22.5, z = c("a", "a", "b", "b")),
-       aes(p_radius = x, p_theta = y, colour = z)) +
-    with_polar(geom_polygon(size = 3), geom_path(size = 6),
-               interpolate = T, supplement = T, add_origin = F) +
-    geom_point(stat = "polar", size = 10) +
-    coord_equal()
-
-
-ggplot(data.frame(x = c(1,1,2,2), y = c(1,2,2,1) * 22.5),
-       aes(p_radius = x, p_theta = y)) +
-    with_polar(geom_polygon(size = 3), geom_path(size = 6),
-               interpolate = T, supplement = T, add_origin = F) +
-    geom_point(stat = "polar", size = 10) +
-    coord_equal()
-
-
-ggplot(data.frame(x = 2, y = 1:3 * 30), aes(p_radius = x, p_theta = y)) +
-    with_polar(geom_point(stat = "polar", size = 1),
-               interpolate = T, supplement = F, add_origin = F) +
-    coord_equal()
-
-
-ggplot(data.frame(x = 2, y = c(1,2,3) * 30), aes(p_radius = x, p_theta = y)) +
-    with_polar(geom_smooth(),
-               geom_point(stat = "polar", size = 2),
-               interpolate = T, supplement = F, add_origin = F) +
-    with_polar(geom_smooth(size = 6)) +
-    geom_point(stat = "polar", size = 6) +
-    coord_equal()
-
-
-
-# work with StatPolar
-
-ggplot(data.frame(x = 1, y = c(0,3) * 30), aes(p_radius = x, p_theta = y)) +
-    with_polar(geom_path(stat = "polar"), interpolate = T)
-
-ggplot(data.frame(x = 1, y = c(0,3) * 30), aes(p_radius = x, p_theta = y)) +
-    with_polar(geom_path(), interpolate = T)
-
-
-# work with Stat other than identity and StatPolar
-# work with attention!
-
-ggplot(data.frame(x = 10, y = c(1,2,3) * 30), aes(p_radius = x, p_theta = y)) +
-    with_polar(geom_smooth(), geom_point(size = 6)) +
-    with_polar(geom_smooth(),
-               interpolate = T, supplement = F, add_origin = F) +
-    with_polar(geom_point(stat = "polar", size = 1, colour = "red"),
-               interpolate = T, supplement = F, add_origin = F)
+# ggplot(data.frame(x = 2, y = 1:3 * 30), aes(p_radius = x, p_theta = y)) +
+#     with_polar(geom_polygon(fill = "green"), geom_path(colour = "yellow", size = 3),
+#                interpolate = T, supplement = F, add_origin = F) +
+#     geom_point(stat = "polar", colour = "red", size = 10) +
+#     coord_equal()
+#
+#
+# ggplot(data.frame(x = 1, y = 1:4 * 22.5, z = c("a", "a", "b", "b")),
+#        aes(p_radius = x, p_theta = y, colour = z)) +
+#     with_polar(geom_polygon(size = 3), geom_path(size = 6),
+#                interpolate = T, supplement = F, add_origin = T) +
+#     geom_point(stat = "polar", size = 10) +
+#     coord_equal()
+#
+#
+# ggplot(data.frame(x = 1, y = 1:4 * 22.5, z = c("a", "a", "b", "b")),
+#        aes(p_radius = x, p_theta = y, colour = z)) +
+#     with_polar(geom_polygon(size = 3), geom_path(size = 6),
+#                interpolate = T, supplement = T, add_origin = F) +
+#     geom_point(stat = "polar", size = 10) +
+#     coord_equal()
+#
+#
+# ggplot(data.frame(x = c(1,1,2,2), y = c(1,2,2,1) * 22.5),
+#        aes(p_radius = x, p_theta = y)) +
+#     with_polar(geom_polygon(size = 3), geom_path(size = 6),
+#                interpolate = T, supplement = T, add_origin = F) +
+#     geom_point(stat = "polar", size = 10) +
+#     coord_equal()
+#
+#
+# ggplot(data.frame(x = 2, y = 1:3 * 30), aes(p_radius = x, p_theta = y)) +
+#     with_polar(geom_point(stat = "polar", size = 1),
+#                interpolate = T, supplement = F, add_origin = F) +
+#     coord_equal()
+#
+#
+# ggplot(data.frame(x = 2, y = c(1,2,3) * 30), aes(p_radius = x, p_theta = y)) +
+#     with_polar(geom_smooth(),
+#                geom_point(stat = "polar", size = 2),
+#                interpolate = T, supplement = F, add_origin = F) +
+#     with_polar(geom_smooth(size = 6)) +
+#     geom_point(stat = "polar", size = 6) +
+#     coord_equal()
+#
+#
+#
+# # work with StatPolar
+#
+# ggplot(data.frame(x = 1, y = c(0,3) * 30), aes(p_radius = x, p_theta = y)) +
+#     with_polar(geom_path(stat = "polar"), interpolate = T)
+#
+# ggplot(data.frame(x = 1, y = c(0,3) * 30), aes(p_radius = x, p_theta = y)) +
+#     with_polar(geom_path(), interpolate = T)
+#
+#
+# # work with Stat other than identity and StatPolar
+# # work with attention!
+#
+# ggplot(data.frame(x = 10, y = c(1,2,3) * 30), aes(p_radius = x, p_theta = y)) +
+#     with_polar(geom_smooth(), geom_point(size = 6)) +
+#     with_polar(geom_smooth(),
+#                interpolate = T, supplement = F, add_origin = F) +
+#     with_polar(geom_point(stat = "polar", size = 1, colour = "red"),
+#                interpolate = T, supplement = F, add_origin = F)
