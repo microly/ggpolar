@@ -1,9 +1,9 @@
 #' polar_x
 #'
-#' theta, 0-360, east is 0, anticlockwise
+#' get the
 #'
 #' @param radius a numeric
-#' @param theta a numeric
+#' @param theta a numeric   theta, 0-360, east is 0, anticlockwise
 #'
 #' @return x
 #' @export
@@ -28,6 +28,32 @@ polar_y <- function(radius, theta) {
 }
 
 
+#' xy_radius
+#'
+#' @param x
+#' @param y
+#'
+#' @return
+#' @export
+#'
+#' @examples
+xy_radius <- function(x, y) {
+    (x^2 + y^2)^0.5
+}
+
+
+#' xy_theta
+#'
+#' @param x
+#' @param y
+#'
+#' @return
+#' @export
+#'
+#' @examples
+xy_theta <- function(x, y) {
+    atan2(y, x) * 180 / pi
+}
 
 
 
