@@ -7,6 +7,10 @@
 #'
 #' @export
 #' @examples
+#' library(tibble)
+#' library(magrittr)
+#' library(ggplot2)
+#'
 #' tibble(m = rep(c(1,3), 3),
 #'        a = c(60, 60, 180, 180, 300, 300),
 #'        g = rep(c(1,2,3), each = 2),
