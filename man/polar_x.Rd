@@ -9,11 +9,11 @@ polar_x(radius, theta)
 \arguments{
 \item{radius}{a numeric}
 
-\item{theta}{a numeric}
+\item{theta}{a numeric   theta, 0-360, east is 0, anticlockwise}
 }
 \value{
 x
 }
 \description{
-polar_x
+get the
 }
