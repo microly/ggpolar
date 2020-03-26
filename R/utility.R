@@ -27,8 +27,5 @@ aes_require_y <- function(stat) {
 }
 
 
-#' @importFrom magrittr %>%
 `%>%` <- magrittr::`%>%`
-
-
 
