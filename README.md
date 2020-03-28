@@ -60,8 +60,63 @@ ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) +
 2.You can also translate and(or) rotate the data before the mapping
 process.
 
+``` r
+library(tibble)
+library(ggplot2)
+library(ggpolar)
+
+polar_data <- tibble(theta = 1:360, radius = theta)
+
+ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) + 
+    with_polar(geom_path(),
+               geom_path(aes(polar_x = 200, polar_y = 200, polar_theta0 = 180)))
+#> Warning: Ignoring unknown aesthetics: polar_x, polar_y, polar_theta0
+```
+
+<img src="man/figures/README-translate_rotate-1.png" width="50%" />
+
 3.Data can be interpolated automatically, so you can draw arcs and
 sectors as easily as draw lines and polygons.
+
+``` r
+library(tibble)
+library(ggplot2)
+library(ggpolar)
+
+# you define the start and end points
+polar_data2 <- tibble(theta = c(0,90), radius = 1)
+
+# ggpolar will automatically interpolate other points.
+
+# an arc example
+ggplot(polar_data2, aes(p_theta = theta, p_radius = radius)) + 
+    with_polar(geom_path(), interpolate = TRUE) + 
+    coord_equal()
+```
+
+<img src="man/figures/README-interpolation-1.png" width="50%" />
+
+``` r
+
+# a sector example
+ggplot(polar_data2, aes(p_theta = theta, p_radius = radius)) + 
+    with_polar(geom_polygon(), interpolate = TRUE, add_origin = TRUE) + 
+    coord_equal()
+```
+
+<img src="man/figures/README-interpolation-2.png" width="50%" />
+
+``` r
+
+# ggpolar can even make the supplement geometry for you! 
+ggplot(polar_data2, aes(p_theta = theta, p_radius = radius)) + 
+    with_polar(geom_polygon(), interpolate = TRUE, add_origin = TRUE) +
+    with_polar(geom_polygon(fill = "red"), interpolate = TRUE, 
+               supplement = TRUE, add_origin = TRUE) +
+    coord_equal()
+```
+
+<img src="man/figures/README-interpolation-3.png" width="50%" />
 
 4.With the help of some layer functions (geom\_plar\_axis,
 geom\_polar\_ring and geom\_polar\_bar), you can draw the polar
