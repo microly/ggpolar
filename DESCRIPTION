@@ -6,7 +6,7 @@ Authors@R: person("Yu", "Liu", , "microly@foxmail.com", c("aut", "cre"))
 Description: A few ggplot2 facilities to plot the data in polar coordinateon on the layer of cartesian 
     coordinate. Firstly, you can map radius and theta data to the plot directly, and translate and(or) 
     rotate the data before the mapping process. Secondly, data can be interpolated automatically, so you 
-    can draw arcs and sectors as easily as draw lines and polygons. Tirdly, With the help of some layer 
+    can draw arcs and sectors as easily as draw lines and polygons. Tirdly, with the help of some layer 
     functions (geom_plar_axis, geom_polar_ring and geom_polar_bar), you can draw the polar coordinate based 
     plots (eg. radar plot, pie plot and Nightingale rose diagram ) in a more intuitively way.
 URL: https://github.com/microly/ggpolar
