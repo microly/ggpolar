@@ -7,8 +7,8 @@
 
 <!-- badges: end -->
 
-ggpolar supplies a few ggplot2 facilities to plot the data in polar
-coordinate on the layer of cartesian coordinate.
+ggpolar supplies a few ggplot2 facilities to plot data in polar
+coordinate on a cartesian layer.
 
 ## Installation
 
@@ -22,7 +22,7 @@ devtools::install_github("microly/ggpolar")
 
 ## Usage
 
-1.You can map radius and theta data to the plot directly.
+1.You can map radius and theta to a layer directly.
 
 ``` r
 library(tibble)
@@ -57,8 +57,7 @@ ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) +
 
 <img src="man/figures/README-map_radius_theta-3.png" width="50%" />
 
-2.You can also translate and(or) rotate the data before the mapping
-process.
+2.You can also translate and(or) rotate the data.
 
 ``` r
 ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) + 
@@ -110,8 +109,8 @@ ggplot(polar_data2, aes(p_theta = theta, p_radius = radius)) +
 
 4.With the help of some layer functions (geom\_plar\_axis,
 geom\_polar\_ring and geom\_polar\_bar), you can draw the polar
-coordinate based plots (eg. radar plot, pie plot and Nightingale rose
-diagram ) in a more intuitively way.
+coordinates based plots (eg. radar plot, pie chart and Nightingale rose
+diagram) in a more intuitively way.
 
 ``` r
 

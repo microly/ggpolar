@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-ggpolar supplies a few ggplot2 facilities to plot the data in polar coordinate on the layer of cartesian coordinate.
+ggpolar supplies a few ggplot2 facilities to plot data in polar coordinate on a cartesian layer.
 
 ## Installation
 
@@ -30,7 +30,7 @@ devtools::install_github("microly/ggpolar")
 ```
 ## Usage
 
-1.You can map radius and theta data to the plot directly.
+1.You can map radius and theta to a layer directly.
 
 ```{r map_radius_theta}
 library(tibble)
@@ -50,10 +50,9 @@ ggplot(polar_data) +
 # the way to suppress the warning "Ignoring unknown aesthetics: p_theta, p_radius":
 ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) + 
     with_polar(geom_path())
-    
 ```
 
-2.You can also translate and(or) rotate the data before the mapping process.
+2.You can also translate and(or) rotate the data.
 
 ```{r translate_rotate}
 ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) + 
@@ -86,10 +85,9 @@ ggplot(polar_data2, aes(p_theta = theta, p_radius = radius)) +
     with_polar(geom_polygon(fill = "red"), interpolate = TRUE, 
                supplement = TRUE, add_origin = TRUE) +
     coord_equal()
-
 ```
 
-4.With the help of some layer functions (geom_plar_axis, geom_polar_ring and geom_polar_bar), you can draw the polar coordinate based plots (eg. radar plot, pie plot and Nightingale rose diagram ) in a more intuitively way.
+4.With the help of some layer functions (geom_plar_axis, geom_polar_ring and geom_polar_bar), you can draw the polar coordinates based plots (eg. radar plot, pie chart and Nightingale rose diagram) in a more intuitively way.
 
 ```{r layer_functions}
 
