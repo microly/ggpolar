@@ -8,7 +8,7 @@
 <!-- badges: end -->
 
 ggpolar supplies a few ggplot2 facilities to plot the data in polar
-coordinateon on the layer of cartesian coordinate.
+coordinate on the layer of cartesian coordinate.
 
 ## Installation
 
@@ -36,7 +36,7 @@ ggplot(polar_data) +
     geom_path(aes(p_theta = theta, p_radius = radius), stat = "polar")
 ```
 
-<img src="man/figures/README-map_radius_theta-1.png" width="100%" />
+<img src="man/figures/README-map_radius_theta-1.png" width="50%" />
 
 ``` r
 
@@ -46,7 +46,7 @@ ggplot(polar_data) +
 #> Warning: Ignoring unknown aesthetics: p_theta, p_radius
 ```
 
-<img src="man/figures/README-map_radius_theta-2.png" width="100%" />
+<img src="man/figures/README-map_radius_theta-2.png" width="50%" />
 
 ``` r
 
@@ -55,7 +55,7 @@ ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) +
     with_polar(geom_path())
 ```
 
-<img src="man/figures/README-map_radius_theta-3.png" width="100%" />
+<img src="man/figures/README-map_radius_theta-3.png" width="50%" />
 
 2.You can also translate and(or) rotate the data before the mapping
 process.

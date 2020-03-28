@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "50%"
 )
 ```
 
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-ggpolar supplies a few ggplot2 facilities to plot the data in polar coordinateon on the layer of cartesian coordinate.
+ggpolar supplies a few ggplot2 facilities to plot the data in polar coordinate on the layer of cartesian coordinate.
 
 ## Installation
 
