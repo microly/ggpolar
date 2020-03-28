@@ -4,7 +4,7 @@ Title: A ggplot2 Extension to Plot Data in Polar Coordinates on a Cartesian Laye
 Version: 0.1.0
 Authors@R: person("Yu", "Liu", , "microly@foxmail.com", c("aut", "cre"))
 Description: A few ggplot2 facilities to plot data in polar coordinates on a cartesian layer. Firstly, 
-    you can map radius and theta to a layer directly, and translate and(or) rotate the data 
+    you can map radius and theta to a layer directly, and translate and/or rotate the data 
     before the mapping process. Secondly, data can be interpolated automatically, so you can draw arcs 
     and sectors as easily as draw lines and polygons. Tirdly, with the help of some layer functions 
     , you can draw the polar coordinates based plots (eg. radar plot, pie chart and Nightingale rose 
