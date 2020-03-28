@@ -18,7 +18,15 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-ggpolar supplies a few ggplot2 facilities to plot data in polar coordinate on a cartesian layer.
+ggpolar supplies a few ggplot2 facilities to plot data in polar coordinates on a cartesian layer.
+
+## Highlights
+
+* You can map radius and theta on a cartesian layer directly, and draw the polar coordinates based plots intuitively.
+* You can translate and/or rotate the data (even data in cartesian coordinates!) and/or the whole layer.
+* ggpolar can interpolate data automatically, so you are able to draw arcs and sectors as easily as draw lines and polygons.
+* ggpolar would not supply many layer functions, it tries to modify the layers! So you can plot data in
+polar coordinates on the layers in ggplot2 package and other extension packages.
 
 ## Installation
 
@@ -52,7 +60,7 @@ ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) +
     with_polar(geom_path())
 ```
 
-2.You can also translate and(or) rotate the data.
+2.You can also translate and/or rotate the data.
 
 ```{r translate_rotate}
 ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) + 
