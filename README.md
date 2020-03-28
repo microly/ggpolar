@@ -20,11 +20,11 @@ coordinates on a cartesian layer.
     arcs and sectors as easily as draw lines and polygons.
   - ggpolar would not supply many layer functions, it tries to modify
     the layers\! So you can plot data in polar coordinates on the layers
-    in ggplot2 package and other extension packages.
+    in ggplot2 package and its extension packages.
 
 ## Installation
 
-By now, ggpolar has not been submitted to cran. You can try the
+By now, ggpolar has not been submitted to CRAN. You can try the
 development version from [GitHub](https://github.com/):
 
 ``` r
