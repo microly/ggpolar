@@ -56,12 +56,6 @@ ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) +
 2.You can also translate and(or) rotate the data before the mapping process.
 
 ```{r translate_rotate}
-library(tibble)
-library(ggplot2)
-library(ggpolar)
-
-polar_data <- tibble(theta = 1:360, radius = theta)
-
 ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) + 
     with_polar(geom_path(),
                geom_path(aes(polar_x = 200, polar_y = 200, polar_theta0 = 180)))
@@ -71,10 +65,6 @@ ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) +
 3.Data can be interpolated automatically, so you can draw arcs and sectors as easily as draw lines and polygons.
 
 ```{r interpolation}
-library(tibble)
-library(ggplot2)
-library(ggpolar)
-
 # you define the start and end points
 polar_data2 <- tibble(theta = c(0,90), radius = 1)
 
@@ -100,3 +90,8 @@ ggplot(polar_data2, aes(p_theta = theta, p_radius = radius)) +
 ```
 
 4.With the help of some layer functions (geom_plar_axis, geom_polar_ring and geom_polar_bar), you can draw the polar coordinate based plots (eg. radar plot, pie plot and Nightingale rose diagram ) in a more intuitively way.
+
+```{r layer_functions}
+
+# I will add some examples later.
+```

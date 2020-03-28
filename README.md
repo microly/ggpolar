@@ -61,12 +61,6 @@ ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) +
 process.
 
 ``` r
-library(tibble)
-library(ggplot2)
-library(ggpolar)
-
-polar_data <- tibble(theta = 1:360, radius = theta)
-
 ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) + 
     with_polar(geom_path(),
                geom_path(aes(polar_x = 200, polar_y = 200, polar_theta0 = 180)))
@@ -79,10 +73,6 @@ ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) +
 sectors as easily as draw lines and polygons.
 
 ``` r
-library(tibble)
-library(ggplot2)
-library(ggpolar)
-
 # you define the start and end points
 polar_data2 <- tibble(theta = c(0,90), radius = 1)
 
@@ -122,3 +112,8 @@ ggplot(polar_data2, aes(p_theta = theta, p_radius = radius)) +
 geom\_polar\_ring and geom\_polar\_bar), you can draw the polar
 coordinate based plots (eg. radar plot, pie plot and Nightingale rose
 diagram ) in a more intuitively way.
+
+``` r
+
+# I will add some examples later.
+```
