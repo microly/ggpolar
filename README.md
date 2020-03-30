@@ -19,8 +19,8 @@ coordinates on a cartesian layer.
   - ggpolar can interpolate data automatically, so you are able to draw
     arcs and sectors as easily as draw lines and polygons.
   - ggpolar would not supply many layer functions, it tries to modify
-    the layers\! So you can plot data in polar coordinates on the layers
-    in ggplot2 package and its extension packages.
+    the layers\! So you can plot and handle data in polar coordinates on
+    the layers in ggplot2 package and its extension packages.
 
 ## Installation
 
@@ -74,8 +74,8 @@ ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) +
 ``` r
 ggplot(polar_data, aes(p_theta = theta, p_radius = radius)) + 
     with_polar(geom_path(),
-               geom_path(aes(polar_x = 200, polar_y = 200, polar_theta0 = 180)))
-#> Warning: Ignoring unknown aesthetics: polar_x, polar_y, polar_theta0
+               geom_path(aes(translate_x = 200, translate_y = 200, rotate = 180)))
+#> Warning: Ignoring unknown aesthetics: translate_x, translate_y, rotate
 ```
 
 <img src="man/figures/README-translate_rotate-1.png" width="50%" />
