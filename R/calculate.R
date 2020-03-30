@@ -62,12 +62,12 @@ polar_compute_group <- function(data, name) {
     if (tibble::has_name(data, "x")) warning(paste0(name, " ignoring aes x!"), call. = FALSE)
     if (tibble::has_name(data, "y")) warning(paste0(name, " ignoring aes y!"), call. = FALSE)
 
-    if (!tibble::has_name(data, "polar_x")) data$polar_x <- 0
-    if (!tibble::has_name(data, "polar_y")) data$polar_y <- 0
-    if (!tibble::has_name(data, "polar_theta0")) data$polar_theta0 <- 0
+    if (!tibble::has_name(data, "translate_x")) data$translate_x <- 0
+    if (!tibble::has_name(data, "translate_y")) data$translate_y <- 0
+    if (!tibble::has_name(data, "rotate")) data$rotate <- 0
 
-    x = polar_x(data$p_radius, (data$p_theta + data$polar_theta0)) + data$polar_x
-    y = polar_y(data$p_radius, (data$p_theta + data$polar_theta0)) + data$polar_y
+    x = polar_x(data$p_radius, (data$p_theta + data$rotate)) + data$translate_x
+    y = polar_y(data$p_radius, (data$p_theta + data$rotate)) + data$translate_y
 
     data$x <- x
     data$y <- y

@@ -37,7 +37,7 @@
 StatPolar <- ggplot2::ggproto("StatPolar", ggplot2::Stat,
     required_aes = c("p_radius", "p_theta"),
     default_aes = ggplot2::aes(x = ggplot2::stat(x), y = ggplot2::stat(y),
-                               polar_x = 0, polar_y = 0, polar_theta0 = 0),
+                               translate_x = 0, translate_y = 0, rotate = 0),
 
     compute_group = function(data, scales) {
         polar_compute_group(data, "StatPolar")
