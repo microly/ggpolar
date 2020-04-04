@@ -23,6 +23,7 @@ polar_x <- function(radius, theta) {
 #' @export
 #'
 #' @examples
+#' see ?stat_polar for more details.
 polar_y <- function(radius, theta) {
     radius * sinpi(theta/180)
 }
