@@ -17,3 +17,6 @@ y
 \description{
 pole_y
 }
+\examples{
+see ?stat_polar for more details.
+}
