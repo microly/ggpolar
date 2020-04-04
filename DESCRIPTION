@@ -1,6 +1,6 @@
 Package: ggpolar
 Type: Package
-Title: A ggplot2 Extension to Plot Data in Polar Coordinates on a Cartesian Layer.
+Title: A ggplot2 Extension to Plot Data in Polar Coordinates on a Cartesian Layer
 Version: 0.1.0
 Authors@R: person("Yu", "Liu", , "microly@foxmail.com", c("aut", "cre"))
 Description: A few ggplot2 facilities to plot data in polar coordinates on a cartesian layer. Firstly, 
