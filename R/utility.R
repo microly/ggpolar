@@ -1,6 +1,19 @@
+# a helper function to modify aes
 drop_xy <- function(aes) {
-    aes[!(aes %in% c("x", "y"))]
+  aes[!(aes %in% c("x", "y"))]
     #c(aes[!(aes %in% c("x", "y"))], c("p_radius", "p_theta"))
+}
+
+
+# a helper function to test whether "x" is a required aes of a stat
+aes_require_x <- function(stat) {
+  "x" %in% stat$required_aes
+}
+
+
+# a helper function to test whether "y" is a required aes of a stat
+aes_require_y <- function(stat) {
+  "y" %in% stat$required_aes
 }
 
 
@@ -15,16 +28,6 @@ drop_xy <- function(aes) {
 #
 #     aes_new
 # }
-
-
-aes_require_x <- function(stat) {
-    "x" %in% stat$required_aes
-}
-
-
-aes_require_y <- function(stat) {
-    "y" %in% stat$required_aes
-}
 
 
 
