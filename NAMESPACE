@@ -3,6 +3,7 @@
 export(StatPolar)
 export(polar_x)
 export(polar_y)
+export(stat_polar)
 export(with_polar)
 export(xy_radius)
 export(xy_theta)
